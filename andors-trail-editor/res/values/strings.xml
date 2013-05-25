@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Andor\'s editor</string>
+	<string name="label_savelist">Select a save:</string>
+	<string name="msg_info_save_path">Your changes were saved to slot %d.</string>
+	<string name="msg_warn_savefile_version">Please ensure that you\'re editing Andor\'s Trail 0.6.11.</string>
+	<string name="msg_warn_alt_save_path">Can\'t save file to suitable slot. Your game was saved to %s.</string>
+	<string name="msg_err_unexpected">Unexpected error. Something wrong happened. Try again.</string>
+	<string name="msg_err_cant_write">Can\'t save file to SD card. Nothing was saved.</string>
+	<string name="msg_err_cant_find_andors_trail">Can\'t find Andor\'s Trail. Please, install it first.</string>
+	
+	<string name="label_item_quantity_fmt">Quantity: %d</string>
+	<string name="label_dialog_btn_positive">Set</string>
+	<string name="label_dialog_btn_negative">Cancel</string>
+	<string name="label_editor_menu_save">Save</string>
+</resources>
