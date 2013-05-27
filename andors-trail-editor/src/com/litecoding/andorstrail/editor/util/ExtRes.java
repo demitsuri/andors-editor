@@ -1,4 +1,4 @@
-package com.litecoding.andorstrail.editor;
+package com.litecoding.andorstrail.editor.util;
 
 import android.content.Context;
 import android.content.res.Resources;

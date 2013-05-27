@@ -2,7 +2,7 @@
 /*
  * 
  */
-package com.litecoding.andorstrail.editor.entity;
+package com.litecoding.andorstrail.editor.util;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;

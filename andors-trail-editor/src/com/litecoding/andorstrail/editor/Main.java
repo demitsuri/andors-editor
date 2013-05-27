@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.litecoding.andorstrail.editor.entity.v33.FileHeader;
+import com.litecoding.andorstrail.editor.util.ExtRes;
 
 public class Main extends Activity {
 	public static final String TAG = "andors-trail-editor"; 
