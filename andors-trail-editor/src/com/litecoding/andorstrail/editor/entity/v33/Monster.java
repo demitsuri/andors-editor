@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
+
 public class Monster extends SaveEntity {
 	/* actor fields*/
 	public CombatTraits mCombatTraits;
@@ -21,7 +23,8 @@ public class Monster extends SaveEntity {
 	
 	@Override
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
-		if(rewindAfterRead == false) {
+		if(rewindAfterRead) {
+			mSavedException = new RewindIsNotSupportedException();
 			return false;
 		}
 		

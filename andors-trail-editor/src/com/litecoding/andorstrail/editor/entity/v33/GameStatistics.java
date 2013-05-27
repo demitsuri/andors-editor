@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
+
 public class GameStatistics extends SaveEntity {
 	public int mDeaths;
 	public Map<String, Integer> mKilledMonsters = new HashMap<String, Integer>();
@@ -13,7 +15,8 @@ public class GameStatistics extends SaveEntity {
 
 	@Override
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
-		if(rewindAfterRead == false) {
+		if(rewindAfterRead) {
+			mSavedException = new RewindIsNotSupportedException();
 			return false;
 		}
 		

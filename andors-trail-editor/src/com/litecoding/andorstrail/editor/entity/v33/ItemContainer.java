@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
+
 public class ItemContainer extends SaveEntity {
 	public List<Item> mItems = new LinkedList<Item>();
 	
@@ -14,7 +16,8 @@ public class ItemContainer extends SaveEntity {
 
 		@Override
 		public boolean read(DataInputStream dis, boolean rewindAfterRead) {
-			if(rewindAfterRead == false) {
+			if(rewindAfterRead) {
+				mSavedException = new RewindIsNotSupportedException();
 				return false;
 			}
 			

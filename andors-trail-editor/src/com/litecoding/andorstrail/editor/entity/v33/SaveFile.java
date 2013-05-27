@@ -3,6 +3,7 @@ package com.litecoding.andorstrail.editor.entity.v33;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
 import com.litecoding.andorstrail.editor.entity.v33.FileHeader;
 
 public class SaveFile extends SaveEntity {
@@ -11,7 +12,8 @@ public class SaveFile extends SaveEntity {
 	public ModelContainer mModelContainer;
 
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
-		if(rewindAfterRead == false) {
+		if(rewindAfterRead) {
+			mSavedException = new RewindIsNotSupportedException();
 			return false;
 		}
 		

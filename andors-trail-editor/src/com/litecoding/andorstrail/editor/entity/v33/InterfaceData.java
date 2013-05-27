@@ -3,6 +3,8 @@ package com.litecoding.andorstrail.editor.entity.v33;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
+
 public class InterfaceData extends SaveEntity {
 	public boolean mIsMainActivityVisible;
 	public boolean mIsInCombat;
@@ -12,7 +14,8 @@ public class InterfaceData extends SaveEntity {
 
 	@Override
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
-		if(rewindAfterRead == false) {
+		if(rewindAfterRead) {
+			mSavedException = new RewindIsNotSupportedException();
 			return false;
 		}
 		

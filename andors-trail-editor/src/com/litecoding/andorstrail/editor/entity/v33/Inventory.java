@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
+
 
 public class Inventory extends SaveEntity {
 	public ItemContainer mItemContainer;
@@ -14,7 +16,8 @@ public class Inventory extends SaveEntity {
 
 	@Override
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
-		if(rewindAfterRead == false) {
+		if(rewindAfterRead) {
+			mSavedException = new RewindIsNotSupportedException();
 			return false;
 		}
 		

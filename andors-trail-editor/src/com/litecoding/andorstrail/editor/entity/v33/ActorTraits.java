@@ -3,6 +3,8 @@ package com.litecoding.andorstrail.editor.entity.v33;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
+
 public class ActorTraits extends SaveEntity {
 	public int mIconId;
 	public Size mTileSize;
@@ -15,6 +17,11 @@ public class ActorTraits extends SaveEntity {
 
 	@Override
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
+		if(rewindAfterRead) {
+			mSavedException = new RewindIsNotSupportedException();
+			return false;
+		}
+		
 		try {
 			mIconId = dis.readInt();
 			

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
+
 
 public class Player extends SaveEntity {
 	/* actor fields*/
@@ -84,7 +86,8 @@ public class Player extends SaveEntity {
 
 		@Override
 		public boolean read(DataInputStream dis, boolean rewindAfterRead) {
-			if(rewindAfterRead == false) {
+			if(rewindAfterRead) {
+				mSavedException = new RewindIsNotSupportedException();
 				return false;
 			}
 			
@@ -123,7 +126,8 @@ public class Player extends SaveEntity {
 
 	@Override
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
-		if(rewindAfterRead == false) {
+		if(rewindAfterRead) {
+			mSavedException = new RewindIsNotSupportedException();
 			return false;
 		}
 		
