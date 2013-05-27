@@ -27,8 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.litecoding.andorstrail.editor.entity.SaveFileUtils;
-import com.litecoding.andorstrail.editor.entity.common.ItemContainer.Item;
-import com.litecoding.andorstrail.editor.entity.common.SaveFile;
+import com.litecoding.andorstrail.editor.entity.v33.ItemContainer.Item;
+import com.litecoding.andorstrail.editor.entity.v33.SaveFile;
 import com.litecoding.andorstrail.editor.widget.NumberPicker;
 import com.litecoding.classkit.view.ObjectAdapter;
 import com.litecoding.classkit.view.ObjectAdapter.ObjectMapper;
