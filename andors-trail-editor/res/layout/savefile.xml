@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true" 
         android:layout_margin="5dip" />
     
-    <TextView 
+    <org.holoeverywhere.widget.TextView 
         android:id="@+id/labelName" 
         android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
     	android:layout_margin="5dip" 
     	android:text="123456" />
 
-    <TextView 
+    <org.holoeverywhere.widget.TextView 
         android:id="@+id/labelSummary" 
         android:layout_width="wrap_content"
     	android:layout_height="wrap_content" 

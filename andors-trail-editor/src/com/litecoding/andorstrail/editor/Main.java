@@ -8,7 +8,8 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
-import android.app.Activity;
+import org.holoeverywhere.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
