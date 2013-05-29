@@ -15,4 +15,7 @@
 	<string name="label_dialog_btn_positive">Set</string>
 	<string name="label_dialog_btn_negative">Cancel</string>
 	<string name="label_editor_menu_save">Save</string>
+	
+	<string name="title_dialog_search_save">Searching save files</string>
+	<string name="msg_dialog_search_save_fmt">Found %s</string>
 </resources>

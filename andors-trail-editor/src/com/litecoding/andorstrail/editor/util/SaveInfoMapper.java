@@ -6,13 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.litecoding.andorstrail.editor.R;
-import com.litecoding.andorstrail.editor.entity.v33.FileHeader;
 import com.litecoding.classkit.view.ObjectAdapter.ObjectMapper;
 
-public class SaveInfoMapper implements ObjectMapper<FileHeader> {
+public class SaveInfoMapper implements ObjectMapper<ExtendedFileHeader> {
 
 	@Override
-	public void mapData(int pos, View view, FileHeader data) {
+	public void mapData(int pos, View view, ExtendedFileHeader data) {
 		ImageView imgStatus = (ImageView)view.findViewById(R.id.status);
 		TextView labelName = (TextView)view.findViewById(R.id.labelName);
     	TextView labelSummary = (TextView)view.findViewById(R.id.labelSummary);

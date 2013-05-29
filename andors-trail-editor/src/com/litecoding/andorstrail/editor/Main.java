@@ -11,9 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.ProgressDialog;
 import org.holoeverywhere.widget.ListView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -22,7 +24,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
-import com.litecoding.andorstrail.editor.entity.v33.FileHeader;
 import com.litecoding.andorstrail.editor.util.ExtRes;
 import com.litecoding.andorstrail.editor.util.ExtendedFileHeader;
 import com.litecoding.andorstrail.editor.util.SaveInfoMapper;
@@ -31,6 +32,8 @@ import com.litecoding.classkit.view.ObjectAdapter;
 public class Main extends Activity {
 	public static final String TAG = "andors-trail-editor"; 
 	public static final String EXTRA_FILEPATH = "filepath";
+	
+	private ProgressDialog mProgressDialog;
 	
     /** Called when the activity is first created. */
     @Override
@@ -47,39 +50,7 @@ public class Main extends Activity {
         		concat("andors-trail").
         		concat(File.separator);
         
-        List<FileHeader> saveHeaders = new LinkedList<FileHeader>();
         ListView listView = (ListView)findViewById(R.id.listSaves);
-        ObjectAdapter<FileHeader> adapter = new ObjectAdapter<FileHeader>(getLayoutInflater(), 
-        		saveHeaders, 
-        		R.layout.item_savefile, 
-        		new SaveInfoMapper());
-        
-        for(final String element : new File(basePath).list()) {
-        	if(!element.startsWith("savegame")) {
-        		continue;
-        	}
-        	
-        	try {
-	        	DataInputStream dis = new DataInputStream(new FileInputStream(basePath.concat(element)));
-	        	ExtendedFileHeader fh = new ExtendedFileHeader();
-	        	boolean res = fh.read(dis);
-	        	dis.close();
-	        	
-	        	if(!res) {
-	        		continue;
-	        	}
-	        	
-	        	fh.mPath = basePath;
-	        	fh.mFilename = element;
-	        	
-	        	saveHeaders.add(fh);
-        	} catch(Exception e) {
-        		
-        	}
-        	
-        } //for
-        
-        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -103,6 +74,75 @@ public class Main extends Activity {
 				}
 			}
 		});
-        adapter.notifyDataSetChanged();
+        
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setTitle(R.string.title_dialog_search_save);
+        mProgressDialog.show();
+        
+        ReadHeadersTask task = new ReadHeadersTask();
+        task.execute(basePath);
+    }
+    
+    class ReadHeadersTask extends AsyncTask<String, String, List<ExtendedFileHeader>> {
+
+		@Override
+		protected List<ExtendedFileHeader> doInBackground(String... params) {
+			String basePath = params[0];
+			List<ExtendedFileHeader> result = new LinkedList<ExtendedFileHeader>();
+			
+			for(final String element : new File(basePath).list()) {
+	        	if(!element.startsWith("savegame")) {
+	        		continue;
+	        	}
+	        	
+	        	try {
+		        	DataInputStream dis = new DataInputStream(new FileInputStream(basePath.concat(element)));
+		        	ExtendedFileHeader fh = new ExtendedFileHeader();
+		        	boolean res = fh.read(dis);
+		        	dis.close();
+		        	
+		        	if(!res) {
+		        		continue;
+		        	}
+		        	
+		        	fh.mPath = basePath;
+		        	fh.mFilename = element;
+		        	
+		        	result.add(fh);
+		        	publishProgress(element);
+	        	} catch(Exception e) {
+	        		
+	        	}
+	        	
+	        } //for
+			
+			return result;
+		}
+    	
+		protected void onProgressUpdate(String... progress) {
+			if(progress.length == 0)
+				return;
+			
+			if(Main.this.mProgressDialog != null) {
+				String msg = Main.this.getString(R.string.msg_dialog_search_save_fmt, 
+						progress[0]);
+				Main.this.mProgressDialog.setMessage(msg);
+			}
+		}
+		
+		protected void onPostExecute(List<ExtendedFileHeader> result) {
+			ObjectAdapter<ExtendedFileHeader> adapter = 
+				new ObjectAdapter<ExtendedFileHeader>(Main.this.getLayoutInflater(), 
+	        		result, 
+	        		R.layout.item_savefile, 
+	        		new SaveInfoMapper());
+			
+			ListView listView = (ListView)Main.this.findViewById(R.id.listSaves);
+			listView.setAdapter(adapter);
+			
+			if(Main.this.mProgressDialog != null) {
+				Main.this.mProgressDialog.dismiss();
+			}
+		}
     }
 }
