@@ -11,11 +11,20 @@
 	    android:layout_height="wrap_content" 
 	    android:layout_width="wrap_content" 
 	    android:text="@string/label_savelist" />
+	
+	<org.holoeverywhere.widget.ListView 
+	    android:id="@+id/listSaves"
+	    android:layout_height="0dip" 
+	    android:layout_width="fill_parent" 
+	    android:layout_weight="1.0" 
+	    android:scrollbars="vertical">	    
+	</org.holoeverywhere.widget.ListView>
+	
 	<ScrollView 
 	    android:id="@+id/scrollSaves"
 	    android:layout_height="0dip" 
 	    android:layout_width="fill_parent" 
-	    android:layout_weight="1.0" 
+	    android:layout_weight="0.0" 
 	    android:scrollbars="vertical">
 	    <org.holoeverywhere.widget.LinearLayout 
 	        android:id="@+id/containerSaves"
