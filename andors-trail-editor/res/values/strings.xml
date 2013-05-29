@@ -18,4 +18,6 @@
 	
 	<string name="title_dialog_search_save">Searching save files</string>
 	<string name="msg_dialog_search_save_fmt">Found %s</string>
+	
+	<string name="title_main_select_save">Select a save file</string>
 </resources>

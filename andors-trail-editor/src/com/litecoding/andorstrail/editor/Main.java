@@ -24,6 +24,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.litecoding.andorstrail.editor.util.ExtRes;
 import com.litecoding.andorstrail.editor.util.ExtendedFileHeader;
 import com.litecoding.andorstrail.editor.util.SaveInfoMapper;
@@ -44,6 +45,9 @@ public class Main extends Activity {
         if(!ExtRes.init(getApplicationContext())) {
         	Toast.makeText(this, R.string.msg_err_cant_find_andors_trail, Toast.LENGTH_LONG).show();
         }
+        
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.title_main_select_save);
         
         final String basePath = Environment.getExternalStorageDirectory().getAbsolutePath().
         		concat(File.separator).

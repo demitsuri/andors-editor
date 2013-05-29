@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/containerSave"
-    android:background="@drawable/bkg_rectangle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dip"
@@ -17,7 +16,7 @@
     
     <org.holoeverywhere.widget.TextView 
         android:id="@+id/labelName" 
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
     	android:layout_height="wrap_content"
     	android:layout_alignParentTop="true"
     	android:layout_toRightOf="@+id/status"
@@ -26,11 +25,12 @@
 
     <org.holoeverywhere.widget.TextView 
         android:id="@+id/labelSummary" 
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
     	android:layout_height="wrap_content" 
     	android:layout_below="@+id/labelName"
     	android:layout_toRightOf="@+id/status"
     	android:layout_margin="5dip"
+    	android:minLines="2"
     	android:maxLines="2"
     	android:text="123456" />
     
