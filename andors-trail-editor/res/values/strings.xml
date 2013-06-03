@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Andor\'s editor</string>
-	<string name="label_savelist">Select a save:</string>
+    
 	<string name="msg_info_save_path">Your changes were saved to slot %d.</string>
 	<string name="msg_err_savefile_version">Please ensure that you\'re editing Andor\'s Trail 0.6.12 (internal version: 33).</string>
 	<string name="msg_warn_old_save_ver">Load and save this game with new version of Andor\'s Trail to edit.</string>
@@ -16,8 +16,12 @@
 	<string name="label_dialog_btn_negative">Cancel</string>
 	<string name="label_editor_menu_save">Save</string>
 	
+	<string name="title_dialog_load_resources">Loading Andor\'s Trail resources</string>
 	<string name="title_dialog_search_save">Searching save files</string>
+	<string name="title_dialog_parse_save">Parsing save file</string>
 	<string name="msg_dialog_search_save_fmt">Found %s</string>
+	<string name="msg_dialog_parse_save_fmt">Parsed %s</string>
 	
 	<string name="title_main_select_save">Select a save file</string>
+	<string name="title_main_inventory">Inventory</string>
 </resources>

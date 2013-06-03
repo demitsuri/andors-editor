@@ -1,0 +1,1 @@
+java -cp aparse-2.3.jar com.parse2.aparse.Parser -package com.litecoding.andorstrail.res.parser -destdir ./parser grammar.abnf >grammar.log 2>grammar.error.log

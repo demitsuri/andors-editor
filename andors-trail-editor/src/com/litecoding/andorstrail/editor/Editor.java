@@ -4,50 +4,34 @@
  */
 package com.litecoding.andorstrail.editor;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.util.List;
 
-import android.app.Activity;
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.ProgressDialog;
+import org.holoeverywhere.widget.ListView;
+
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.litecoding.andorstrail.editor.entity.v33.ItemContainer.Item;
 import com.litecoding.andorstrail.editor.entity.v33.SaveFile;
+import com.litecoding.andorstrail.editor.util.ItemInfoMapper;
 import com.litecoding.andorstrail.editor.util.SaveFileUtils;
 import com.litecoding.andorstrail.editor.widget.NumberPicker;
 import com.litecoding.classkit.view.ObjectAdapter;
-import com.litecoding.classkit.view.ObjectAdapter.ObjectMapper;
 
 public class Editor extends Activity {
-	private String mSrcFilePath;
-	
-	private SaveFile mSave;
-	
-	private class InventoryMapper implements ObjectMapper<Item> {
-
-		public void mapData(int position, View view, Item item) {
-			TextView label = (TextView)view.findViewById(R.id.labelName);
-        	label.setText(item.mItemTypeId);
-        	label = (TextView)view.findViewById(R.id.labelQuantity);
-        	label.setText(getResources().getString(R.string.label_item_quantity_fmt, item.mQuantity));
-		}
-		
-	}
+	private ProgressDialog mProgressDialog;
 	
 	
 	/** Called when the activity is first created. */
@@ -62,28 +46,12 @@ public class Editor extends Activity {
         	return;
         }
         
-        //TODO: remove this from UI thread
-        try {
-        	mSrcFilePath = getIntent().getStringExtra(Main.EXTRA_FILEPATH);
-        	mSave = SaveFileUtils.load(mSrcFilePath);
-        } catch(Exception e) {
-        	Log.e(Main.TAG, "Parsing error", e);
-        	finish();
-        	Toast.makeText(this, R.string.msg_err_unexpected, Toast.LENGTH_LONG).show();
-        	return;
-        }
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.title_main_inventory);
         
-        GridView itemGrid = (GridView)findViewById(R.id.gridItems);
-        
-        List<Item> items = mSave.mModelContainer.mPlayer.mInventory.mItemContainer.mItems;
-        final ObjectAdapter<Item> adapter = new ObjectAdapter<Item>(getLayoutInflater(), 
-        		items, 
-        		R.layout.item, 
-        		new InventoryMapper());
-        
-        itemGrid.setAdapter(adapter);
-        
-        itemGrid.setOnItemClickListener(new OnItemClickListener() {
+        ListView itemList = (ListView)findViewById(R.id.listInventory);
+                
+        itemList.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> adapterView, View view, int position,
 					long id) {
@@ -106,7 +74,7 @@ public class Editor extends Activity {
 						} catch(Exception e) {
 							Log.e(Main.TAG, "Quantity parsing error", e);
 						}
-						adapter.notifyDataSetChanged();
+						//adapter.notifyDataSetChanged();
 					}
 				});
 				builder.setNegativeButton(R.string.label_dialog_btn_negative, 
@@ -121,8 +89,17 @@ public class Editor extends Activity {
 			}
 		});
         
+        
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setTitle(R.string.title_dialog_parse_save);
+        mProgressDialog.show();
+        
+        
+        ReadSaveTask task = new ReadSaveTask();
+        task.execute(getIntent().getStringExtra(Main.EXTRA_FILEPATH));
     }
     
+    /*
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -192,5 +169,49 @@ public class Editor extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	*/
+    
+    class ReadSaveTask extends AsyncTask<String, String, SaveFile> {
 
+		@Override
+		protected SaveFile doInBackground(String... params) {
+			String srcFilePath = params[0];
+			SaveFile save = null;
+	        try {
+	        	save = SaveFileUtils.load(srcFilePath);
+	        } catch(Exception e) {
+	        	Log.e(Main.TAG, "Parsing error", e);
+	        	Toast.makeText(Editor.this, R.string.msg_err_unexpected, Toast.LENGTH_LONG).show();
+	        	return null;
+	        }
+			return save;
+		}
+    	
+		protected void onProgressUpdate(String... progress) {
+			if(progress.length == 0)
+				return;
+			
+			if(Editor.this.mProgressDialog != null) {
+				String msg = Editor.this.getString(R.string.msg_dialog_search_save_fmt, 
+						progress[0]);
+				Editor.this.mProgressDialog.setMessage(msg);
+			}
+		}
+		
+		protected void onPostExecute(SaveFile result) {
+			List<Item> items = result.mModelContainer.mPlayer.mInventory.mItemContainer.mItems;
+			ObjectAdapter<Item> adapter = 
+				new ObjectAdapter<Item>(Editor.this.getLayoutInflater(), 
+	        		items, 
+	        		R.layout.item_inventory, 
+	        		new ItemInfoMapper());
+			
+			ListView listView = (ListView)Editor.this.findViewById(R.id.listInventory);
+			listView.setAdapter(adapter);
+			
+			if(Editor.this.mProgressDialog != null) {
+				Editor.this.mProgressDialog.dismiss();
+			}
+		}
+    }
 }

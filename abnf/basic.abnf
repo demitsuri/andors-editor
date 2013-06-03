@@ -1,0 +1,25 @@
+#####BASIC RULES#####
+HTAB = %x09;
+CR = %x0d;
+LF = %x0a;
+SP = %x20;
+CRLF = [CR] LF;
+QUOT = %x22;
+HASH = %x23;
+COMMA = %x2c;
+DOT = %x2e;
+COLON = %x3a;
+SEMICOLON = %x3b;
+EQ = %x3d;
+UNDERSCORE = %x5f;
+PIPE = %x7c;
+SQR_BRACKET_L = %x5b;
+SQR_BRACKET_R = %x5d;
+CRL_BRACKET_L = %x7b;
+CRL_BRACKET_R = %x7d;
+BRACKET_L = SQR_BRACKET_L;
+BRACKET_R = SQR_BRACKET_R;
+ALPHA = %x41-5a / %x61-7a;
+DIGIT = %x30-39;
+HEXDIG = DIGIT / "A" / "B" / "C" / "D" / "E" / "F" ;
+VCHAR = %x21-7e;
