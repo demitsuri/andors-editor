@@ -18,7 +18,7 @@ qualifier = (ALPHA / UNDERSCORE) *(ALPHA / DIGIT / UNDERSCORE);
 
 resDefinition = definition *SP SEMICOLON;
 definition = CRL_BRACKET_L *SP *(*SP ((arrVal *SP PIPE) / (intVal *SP PIPE) / (strVal *SP PIPE) / (emptyVal *SP PIPE)) ) *SP CRL_BRACKET_R;
-strVal = 1*(ALPHA / DIGIT / UNDERSCORE / "-" / SP / DOT / COMMA / COLON / SEMICOLON / "(" / ")");
+strVal = 1*(ALPHA / DIGIT / UNDERSCORE / "-" / SP / DOT / COMMA / COLON / SEMICOLON / "(" / ")" / $rule("ExtRule_U_L"));
 intVal = [%x2d] 1*(DIGIT);
 arrVal = definition;
 emptyVal = "";

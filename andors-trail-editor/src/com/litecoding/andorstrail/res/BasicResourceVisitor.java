@@ -133,5 +133,5 @@ public abstract class BasicResourceVisitor implements Visitor {
 	public Object visit(Terminal_NumericValue value) {
 		return value.spelling;
 	}
-
+	
 }

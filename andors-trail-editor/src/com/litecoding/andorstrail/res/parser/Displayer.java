@@ -3,7 +3,7 @@
  * -----------------------------------------------------------------------------
  *
  * Producer : com.parse2.aparse.Parser 2.3
- * Produced : Mon Jun 03 09:53:42 MUT 2013
+ * Produced : Fri Jun 07 20:56:54 MUT 2013
  *
  * -----------------------------------------------------------------------------
  */
@@ -193,6 +193,12 @@ public class Displayer implements Visitor
   public Object visit(Rule_VCHAR rule)
   {
     return visitRules(rule.rules);
+  }
+
+  public Object visit(ExtRule_U_L rule)
+  {
+    System.out.print(rule.spelling);
+    return null;
   }
 
   public Object visit(Terminal_StringValue value)

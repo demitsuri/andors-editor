@@ -22,7 +22,7 @@ import com.litecoding.andorstrail.res.parser.Rule_resDefinition;
 import com.litecoding.andorstrail.res.parser.Rule_resource;
 import com.litecoding.andorstrail.res.parser.Rule_strVal;
 
-public class ResourceVisitor extends BasicResourceVisitor {
+public class ResourceVisitor extends BasicUnicodeResourceVisitor {
 	private int mResouceType = DataEntityFactory.TYPE_UNKNOWN;
 	
 	public ResourceVisitor() {
@@ -175,4 +175,5 @@ public class ResourceVisitor extends BasicResourceVisitor {
 		//empty value is null
 		return null;
 	}
+
 }
