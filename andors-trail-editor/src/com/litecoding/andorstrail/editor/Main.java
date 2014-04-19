@@ -17,17 +17,16 @@ import org.holoeverywhere.app.ProgressDialog;
 import org.holoeverywhere.widget.ListView;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.litecoding.andorstrail.editor.util.ExtendedFileHeader;
 import com.litecoding.andorstrail.editor.util.SaveInfoMapper;
 import com.litecoding.andorstrail.res.ExtRes;
@@ -67,11 +66,11 @@ public class Main extends Activity {
 				ListAdapter adapter = (ListAdapter)adapterView.getAdapter();
 				ExtendedFileHeader fh = (ExtendedFileHeader)adapter.getItem(pos);
 				
-				if(fh.mVer < 33) {
+				if(fh.mVer < 42) {
 					Toast.makeText(Main.this, 
 						R.string.msg_warn_old_save_ver, 
 						Toast.LENGTH_LONG).show();
-				} else if(fh.mVer > 33) {
+				} else if(fh.mVer > 42) {
 					Toast.makeText(Main.this, 
 						R.string.msg_err_new_save_ver, 
 						Toast.LENGTH_LONG).show();
@@ -148,7 +147,12 @@ public class Main extends Activity {
 			String basePath = params[0];
 			List<ExtendedFileHeader> result = new LinkedList<ExtendedFileHeader>();
 			
-			for(final String element : new File(basePath).list()) {
+			File baseFile = new File(basePath);
+			if(baseFile == null) {
+				return result;
+			}
+			
+			for(final String element : baseFile.list()) {
 	        	if(!element.startsWith("savegame")) {
 	        		continue;
 	        	}

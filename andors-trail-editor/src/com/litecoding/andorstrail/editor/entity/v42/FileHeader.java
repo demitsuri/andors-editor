@@ -1,8 +1,9 @@
-package com.litecoding.andorstrail.editor.entity.v33;
+package com.litecoding.andorstrail.editor.entity.v42;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+/* Related to com.gpl.rpg.AndorsTrail.savegames.Savegames.FileHeader */
 public class FileHeader extends SaveEntity {
 	public int mVer;
 	public String mName;
@@ -13,6 +14,7 @@ public class FileHeader extends SaveEntity {
 	}
 
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
+		//matches: version code 42
 		boolean result = false;
 		try {
 			if(rewindAfterRead && dis.markSupported()) {
@@ -34,6 +36,7 @@ public class FileHeader extends SaveEntity {
 	}
 
 	public boolean write(DataOutputStream dos) {
+		//matches: version code 42
 		boolean result = false;
 		try {
 			dos.writeInt(mVer);

@@ -1,4 +1,4 @@
-package com.litecoding.andorstrail.editor.entity.v33;
+package com.litecoding.andorstrail.editor.entity.v42;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
 
+/* Related to com.gpl.rpg.AndorsTrail.model.actor.Monster */
 public class Monster extends SaveEntity {
 	/* actor fields*/
 	public CombatTraits mCombatTraits;
@@ -16,6 +17,7 @@ public class Monster extends SaveEntity {
 	public List<ActorCondition> mActorConditions = new LinkedList<ActorCondition>();
 
 	/* monster fields */
+	public int mMoveCost;
 	public String mMonsterTypeId;
 	public boolean mIsAggressive;
 	public boolean mHasShopItems;
@@ -23,6 +25,7 @@ public class Monster extends SaveEntity {
 	
 	@Override
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
+		//matches: version code 42
 		if(rewindAfterRead) {
 			mSavedException = new RewindIsNotSupportedException();
 			return false;
@@ -70,6 +73,8 @@ public class Monster extends SaveEntity {
 				mActorConditions.add(actorCond);
 			}
 			
+			mMoveCost = dis.readInt();
+			
 			//Monster fields
 			mIsAggressive = dis.readBoolean();
 			
@@ -91,6 +96,7 @@ public class Monster extends SaveEntity {
 
 	@Override
 	public boolean write(DataOutputStream dos) {
+		//matches: version code 42
 		try {
 			dos.writeUTF(mMonsterTypeId);
 			
@@ -117,6 +123,7 @@ public class Monster extends SaveEntity {
 				}
 			}
 			
+			dos.writeInt(mMoveCost);
 			dos.writeBoolean(mIsAggressive);
 			dos.writeBoolean(mHasShopItems);
 			if(mHasShopItems) {

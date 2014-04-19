@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-import com.litecoding.andorstrail.editor.entity.v33.SaveFile;
+import com.litecoding.andorstrail.editor.entity.v42.SaveFile;
 
 public class SaveFileUtils {
 	

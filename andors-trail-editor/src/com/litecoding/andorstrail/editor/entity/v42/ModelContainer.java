@@ -1,19 +1,21 @@
-package com.litecoding.andorstrail.editor.entity.v33;
+package com.litecoding.andorstrail.editor.entity.v42;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
 
-
+/* Related to com.gpl.rpg.AndorsTrail.model.ModelContainer */
 public class ModelContainer extends SaveEntity {
 	public Player mPlayer;
 	public String mCurrentMapId;
 	public InterfaceData mInterfaceData;
 	public GameStatistics mGameStatistics;
+	public WorldData mWorldData;
 
 	@Override
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
+		//matches: version code 42
 		if(rewindAfterRead) {
 			mSavedException = new RewindIsNotSupportedException();
 			return false;
@@ -44,11 +46,18 @@ public class ModelContainer extends SaveEntity {
 			return false;
 		}
 		
+		mWorldData = new WorldData();
+		if(!mWorldData.read(dis)) {
+			mSavedException = mGameStatistics.getLastException();
+			return false;
+		}
+		
 		return true;
 	}
 
 	@Override
 	public boolean write(DataOutputStream dos) {
+		//matches: version code 42
 		if(!mPlayer.write(dos)) {
 			mSavedException = mPlayer.getLastException();
 			return false;
@@ -68,6 +77,11 @@ public class ModelContainer extends SaveEntity {
 		
 		if(!mGameStatistics.write(dos)) {
 			mSavedException = mGameStatistics.getLastException();
+			return false;
+		}
+		
+		if(!mWorldData.write(dos)) {
+			mSavedException = mWorldData.getLastException();
 			return false;
 		}
 		

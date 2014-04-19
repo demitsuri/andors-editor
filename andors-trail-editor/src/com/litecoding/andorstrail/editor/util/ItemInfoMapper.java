@@ -5,7 +5,7 @@ import org.holoeverywhere.widget.TextView;
 import android.view.View;
 
 import com.litecoding.andorstrail.editor.R;
-import com.litecoding.andorstrail.editor.entity.v33.ItemContainer.Item;
+import com.litecoding.andorstrail.editor.entity.v42.ItemContainer.Item;
 import com.litecoding.classkit.view.ObjectAdapter.ObjectMapper;
 
 public class ItemInfoMapper implements ObjectMapper<Item> {

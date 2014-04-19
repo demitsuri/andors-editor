@@ -2,15 +2,15 @@
 /*
  * 
  */
-package com.litecoding.andorstrail.editor.entity.v33;
+package com.litecoding.andorstrail.editor.entity.v42;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-public class Range extends SaveEntity {
-	public int mMax;
-	public int mCurrent;
-
+public class Size extends SaveEntity {
+	public int mWidth;
+	public int mHeight;
+		
 	@Override
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
 		if(rewindAfterRead && dis.markSupported()) {
@@ -18,8 +18,8 @@ public class Range extends SaveEntity {
 		}
 		
 		try {
-			mMax = dis.readInt();
-			mCurrent = dis.readInt();
+			mWidth = dis.readInt();
+			mHeight = dis.readInt();
 		} catch (Exception e) {
 			mSavedException = e;
 			return false;
@@ -28,7 +28,7 @@ public class Range extends SaveEntity {
 		if(rewindAfterRead && dis.markSupported()) {
 			try {
 				dis.reset();
-			} catch(Exception e) {
+			} catch (Exception e) {
 				mSavedException = e;
 				return false;
 			}
@@ -36,12 +36,12 @@ public class Range extends SaveEntity {
 		
 		return true;
 	}
-
+	
 	@Override
 	public boolean write(DataOutputStream dos) {
 		try {
-			dos.writeInt(mMax);
-			dos.writeInt(mCurrent);
+			dos.writeInt(mWidth);
+			dos.writeInt(mHeight);
 		} catch (Exception e) {
 			mSavedException = e;
 			return false;

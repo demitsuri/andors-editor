@@ -1,10 +1,11 @@
-package com.litecoding.andorstrail.editor.entity.v33;
+package com.litecoding.andorstrail.editor.entity.v42;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
 
+@Deprecated
 public class ActorTraits extends SaveEntity {
 	public int mIconId;
 	public Size mTileSize;

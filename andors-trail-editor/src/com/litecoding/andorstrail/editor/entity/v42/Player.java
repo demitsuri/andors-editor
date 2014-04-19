@@ -1,4 +1,4 @@
-package com.litecoding.andorstrail.editor.entity.v33;
+package com.litecoding.andorstrail.editor.entity.v42;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -11,17 +11,28 @@ import java.util.Set;
 
 import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
 
-
+/* Related to com.gpl.rpg.AndorsTrail.model.actor.Player */
 public class Player extends SaveEntity {
-	/* actor fields*/
-	public CombatTraits mCombatTraits;
-	public ActorTraits mActorTraits;
+	public int mIconID;
+	public int mBaseMaxAP;
+	public int mBaseMaxHP;
+	public String mName;
+	public int mBaseMoveCost;
+	public int mBaseAttackCost;
+	public int mBaseAttackChance;
+	public int mBaseCriticalSkill;
+	public float mBaseCriticalMultiplier;
+	public Range mBaseDamagePotential;
+	public int mBaseBlockChance;
+	public int mBaseDamageResistance;
+	public int mBaseUseItemCost;
+	public int mBaseReequipCost;
+	
 	public Range mAP;
 	public Range mHP;
 	public Coord mPosition;
 	public List<ActorCondition> mActorConditions = new LinkedList<ActorCondition>();
 	
-	/* player fields*/
 	public Coord mLastPosition;
 	public Coord mNextPosition;
 	public int mLevel;
@@ -42,6 +53,7 @@ public class Player extends SaveEntity {
 
 		@Override
 		public boolean read(DataInputStream dis, boolean rewindAfterRead) {
+			//matches: version code 42
 			if(rewindAfterRead && dis.markSupported()) {
 				dis.mark(8);
 			}
@@ -68,6 +80,7 @@ public class Player extends SaveEntity {
 
 		@Override
 		public boolean write(DataOutputStream dos) {
+			//matches: version code 42
 			try {
 				dos.writeInt(mSkillId);
 				dos.writeInt(mSkillLevel);
@@ -86,6 +99,7 @@ public class Player extends SaveEntity {
 
 		@Override
 		public boolean read(DataInputStream dis, boolean rewindAfterRead) {
+			//matches: version code 42
 			if(rewindAfterRead) {
 				mSavedException = new RewindIsNotSupportedException();
 				return false;
@@ -108,6 +122,7 @@ public class Player extends SaveEntity {
 
 		@Override
 		public boolean write(DataOutputStream dos) {
+			//matches: version code 42
 			try {
 				dos.writeUTF(mQuestId);
 				
@@ -126,6 +141,7 @@ public class Player extends SaveEntity {
 
 	@Override
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
+		//matches: version code 42
 		if(rewindAfterRead) {
 			mSavedException = new RewindIsNotSupportedException();
 			return false;
@@ -133,20 +149,25 @@ public class Player extends SaveEntity {
 		
 		try {
 			//Actor fields
-			boolean isReadCombatTraits = dis.readBoolean();
-			if(isReadCombatTraits) {
-				mCombatTraits = new CombatTraits();
-				if(!mCombatTraits.read(dis)) {
-					mSavedException = mCombatTraits.getLastException();
-					return false;
-				}
-			}
+			mIconID = dis.readInt();
+			mBaseMaxAP = dis.readInt();
+			mBaseMaxHP = dis.readInt();
+			mName = dis.readUTF();
+			mBaseMoveCost = dis.readInt();
+			mBaseAttackCost = dis.readInt();
+			mBaseAttackChance = dis.readInt();
+			mBaseCriticalSkill = dis.readInt();
+			mBaseCriticalMultiplier = dis.readFloat();
 			
-			mActorTraits = new ActorTraits();
-			if(!mActorTraits.read(dis)) {
-				mSavedException = mActorTraits.getLastException();
+			mBaseDamagePotential = new Range();
+			if(!mBaseDamagePotential.read(dis)) {
+				mSavedException = mBaseDamagePotential.getLastException();
 				return false;
 			}
+			
+			mBaseBlockChance = dis.readInt();
+			mBaseDamageResistance = dis.readInt();
+			mBaseMoveCost = dis.readInt();
 			
 			mAP = new Range();
 			if(!mAP.read(dis)) {
@@ -176,8 +197,6 @@ public class Player extends SaveEntity {
 				
 				mActorConditions.add(actorCond);
 			}
-			
-			//Player fields
 			
 			mLastPosition = new Coord();
 			if(!mLastPosition.read(dis)) {
@@ -247,26 +266,39 @@ public class Player extends SaveEntity {
 
 	@Override
 	public boolean write(DataOutputStream dos) {
+		//matches: version code 42
 		try {
-			//Actor fields
-			if(mCombatTraits == null)
-				dos.writeBoolean(false);
-			else {
-				dos.writeBoolean(true);
-				if(!mCombatTraits.write(dos)) {
-					mSavedException = mCombatTraits.getLastException();
-					return false;
-				}
-			}
+			dos.writeInt(mIconID);
+			dos.writeInt(mBaseMaxAP);
+			dos.writeInt(mBaseMaxHP);
+			dos.writeUTF(mName);
+			dos.writeInt(mBaseMoveCost);
+			dos.writeInt(mBaseAttackCost);
+			dos.writeInt(mBaseAttackChance);
+			dos.writeInt(mBaseCriticalSkill);
+			dos.writeFloat(mBaseCriticalMultiplier);
 			
-			if(!mActorTraits.write(dos)) {
-				mSavedException = mActorTraits.getLastException();
+			if(!mBaseDamagePotential.write(dos)) {
+				mSavedException = mBaseDamagePotential.getLastException();
 				return false;
 			}
 			
-			mAP.write(dos);
-			mHP.write(dos);
-			mPosition.write(dos);
+			dos.writeInt(mBaseBlockChance);
+			dos.writeInt(mBaseDamageResistance);
+			dos.writeInt(mBaseMoveCost);
+			
+			if(!mAP.write(dos)) {
+				mSavedException = mAP.getLastException();
+				return false;
+			}
+			if(!mHP.write(dos)) {
+				mSavedException = mHP.getLastException();
+				return false;
+			}
+			if(!mPosition.write(dos)) {
+				mSavedException = mPosition.getLastException();
+				return false;
+			}
 			
 			dos.writeInt(mActorConditions.size());
 			for(ActorCondition actorCondition : mActorConditions) {
@@ -275,9 +307,7 @@ public class Player extends SaveEntity {
 					return false;
 				}
 			}
-			
-			//Player fields
-			
+
 			if(!mLastPosition.write(dos)) {
 				mSavedException = mLastPosition.getLastException();
 				return false;

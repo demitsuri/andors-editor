@@ -1,6 +1,6 @@
 package com.litecoding.andorstrail.editor.util;
 
-import com.litecoding.andorstrail.editor.entity.v33.FileHeader;
+import com.litecoding.andorstrail.editor.entity.v42.FileHeader;
 
 public class ExtendedFileHeader extends FileHeader {
 	public String mPath;

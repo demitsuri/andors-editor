@@ -1,4 +1,4 @@
-package com.litecoding.andorstrail.editor.entity.v33;
+package com.litecoding.andorstrail.editor.entity.v42;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
 
-
+/* Related to com.gpl.rpg.AndorsTrail.model.item.Inventory */
 public class Inventory extends SaveEntity {
 	public ItemContainer mItemContainer;
 	public int mGold;
@@ -16,6 +16,7 @@ public class Inventory extends SaveEntity {
 
 	@Override
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
+		//matches: version code 42
 		if(rewindAfterRead) {
 			mSavedException = new RewindIsNotSupportedException();
 			return false;
@@ -59,6 +60,7 @@ public class Inventory extends SaveEntity {
 
 	@Override
 	public boolean write(DataOutputStream dos) {
+		//matches: version code 42
 		if(!mItemContainer.write(dos)) {
 			mSavedException = mItemContainer.getLastException();
 			return false;

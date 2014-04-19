@@ -1,17 +1,19 @@
-package com.litecoding.andorstrail.editor.entity.v33;
+package com.litecoding.andorstrail.editor.entity.v42;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 import com.litecoding.andorstrail.editor.entity.RewindIsNotSupportedException;
-import com.litecoding.andorstrail.editor.entity.v33.FileHeader;
+import com.litecoding.andorstrail.editor.entity.v42.FileHeader;
 
+/* Related to com.gpl.rpg.AndorsTrail.savegames.Savegames */
 public class SaveFile extends SaveEntity {
 	public FileHeader mFileHeader;
 	public MapsContainer mMapsContainer;
 	public ModelContainer mModelContainer;
 
 	public boolean read(DataInputStream dis, boolean rewindAfterRead) {
+		//matches: version code 42
 		if(rewindAfterRead) {
 			mSavedException = new RewindIsNotSupportedException();
 			return false;
@@ -39,6 +41,7 @@ public class SaveFile extends SaveEntity {
 	}
 
 	public boolean write(DataOutputStream dos) {
+		//matches: version code 42
 		boolean result = false;
 
 		if(!mFileHeader.write(dos)) {

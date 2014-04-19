@@ -18,7 +18,7 @@ Attributions:
 This application uses:
 
  - [RRZE][3] icon set (CC BY-SA)
- - [HoloEverywhere][6] library (MIT)
+ - [HoloEverywhere][6] library v2.1.0 (MIT)
  - [ActionBarSherlock][7] library (Apache 2.0)
  - This README was formatted with
    [Backpager][5] - online markdown tool
