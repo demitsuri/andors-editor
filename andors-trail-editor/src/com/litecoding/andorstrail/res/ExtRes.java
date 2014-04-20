@@ -2,21 +2,21 @@ package com.litecoding.andorstrail.res;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.util.Log;
 
 import com.litecoding.andorstrail.res.entity.DataEntity;
 import com.litecoding.andorstrail.res.entity.DataEntityFactory;
 import com.litecoding.andorstrail.res.entity.ItemCategoryData;
 import com.litecoding.andorstrail.res.entity.ItemData;
-import com.litecoding.andorstrail.res.parser.Parser;
-import com.litecoding.andorstrail.res.parser.ParserException;
-import com.litecoding.andorstrail.res.parser.Rule;
 
 public class ExtRes {
+	public static final String TAG = ExtRes.class.getSimpleName();
 	private static final String PACKAGE = "com.gpl.rpg.AndorsTrail";
 	
 	private static Context atContext;
@@ -130,19 +130,14 @@ public class ExtRes {
 		return atResources.getIdentifier(name, scope, PACKAGE);
 	}
 	
-	@SuppressWarnings("unchecked")
 	private static List<? extends DataEntity> parseData(String data, int resType) {
-		System.err.println(data);
 		List<DataEntity> entities = null;
 		try {
-			Rule base = Parser.parse("resource", data);
-			entities = (List<DataEntity>)base.accept(new ResourceVisitor(resType));
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.d(TAG, data);
+			entities = new LinkedList<DataEntity>();	
+			
+		} catch (Exception e) {
+			Log.e(TAG, "Error while creating entity", e);
 		}
 		
 		return entities;

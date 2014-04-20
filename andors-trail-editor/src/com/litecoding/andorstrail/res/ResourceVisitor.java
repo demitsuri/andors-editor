@@ -22,6 +22,7 @@ import com.litecoding.andorstrail.res.parser.Rule_resDefinition;
 import com.litecoding.andorstrail.res.parser.Rule_resource;
 import com.litecoding.andorstrail.res.parser.Rule_strVal;
 
+@Deprecated
 public class ResourceVisitor extends BasicUnicodeResourceVisitor {
 	private int mResouceType = DataEntityFactory.TYPE_UNKNOWN;
 	

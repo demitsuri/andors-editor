@@ -2,6 +2,7 @@ package com.litecoding.andorstrail.res;
 
 import com.litecoding.andorstrail.res.parser.*;
 
+@Deprecated
 public abstract class BasicResourceVisitor implements Visitor {
 
 	@Override

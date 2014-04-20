@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -147,12 +148,21 @@ public class Main extends Activity {
 			String basePath = params[0];
 			List<ExtendedFileHeader> result = new LinkedList<ExtendedFileHeader>();
 			
-			File baseFile = new File(basePath);
-			if(baseFile == null) {
+			File baseFile = null;
+			try {
+				baseFile = new File(basePath);
+			} catch(Exception e) {
+				Log.e(TAG, "Invalid basePath=".concat(String.valueOf(basePath)), e);
 				return result;
 			}
 			
-			for(final String element : baseFile.list()) {
+			String elements[] = baseFile.list();
+			if(elements == null) {
+				Log.e(TAG, "Directory is empty, returning");
+				return result;
+			}
+			
+			for(final String element : elements) {
 	        	if(!element.startsWith("savegame")) {
 	        		continue;
 	        	}
@@ -173,7 +183,7 @@ public class Main extends Activity {
 		        	result.add(fh);
 		        	publishProgress(element);
 	        	} catch(Exception e) {
-	        		
+	        		Log.e(TAG, "Invalid ".concat(element).concat(" file format"), e);
 	        	}
 	        	
 	        } //for
